@@ -93,25 +93,26 @@ exports.authenticate = async (req, res, next) => {
                     throw new Error(err);
                 }
                 if (response) {
-
-                    console.log("Ton Token :", token);
-
-                        res.header('Authorization', 'Bearer' + token);
-                        res.cookie('token', token, {httpOnly: true, secure: false, maxAge: expireIn * 1000});
-                        
-                        return res.status(200).json('authentification_reussie');
-                    /* indiqué dans le cours : 
-
+                    
                     delete user._doc.password;
 
                     const expireIn = 24 * 60 * 60;
                     const token = jwt.sign({
                         user: user
                     },
-                    SECRET_KEY,
+                    process.env.SECRET_KEY,
                     {
                         expiresIn: expireIn
                     });
+
+                    console.log("Ton Token :", token);
+
+                        res.header('Authorization', 'Bearer ' + token);
+                        res.cookie('token', token, {httpOnly: true, secure: false, maxAge: expireIn * 1000});
+                        
+                        return res.status(200).json('authentification_reussie');
+
+                    /* indiqué dans le cours : 
 
                     res.header('Authorization', 'Bearer' + token);
 
