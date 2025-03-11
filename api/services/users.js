@@ -93,6 +93,15 @@ exports.authenticate = async (req, res, next) => {
                     throw new Error(err);
                 }
                 if (response) {
+
+                    console.log("Ton Token :", token);
+
+                        res.header('Authorization', 'Bearer' + token);
+                        res.cookie('token', token, {httpOnly: true, secure: false, maxAge: expireIn * 1000});
+                        
+                        return res.status(200).json('authentification_reussie');
+                    /* indiqué dans le cours : 
+
                     delete user._doc.password;
 
                     const expireIn = 24 * 60 * 60;
@@ -104,9 +113,9 @@ exports.authenticate = async (req, res, next) => {
                         expiresIn: expireIn
                     });
 
-                    res.header('Authorization', 'Bearer ' + token);
+                    res.header('Authorization', 'Bearer' + token);
 
-                    return res.status(200).json('authenticate_succeed');
+                    return res.status(200).json('authenticate_succeed');*/
                 }
 
                 return res.status(403).json('wrong_credentials');
